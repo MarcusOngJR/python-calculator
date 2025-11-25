@@ -1,41 +1,40 @@
-# calculator.py
-import os
+# test_calculator.py
 
-DEBUG = os.getenv('DEBUG_MODE', 'false').lower() == 'true'
+import pytest
+from calculator import add, subtract, multiply, divide
 
-def add(a, b):
-    """Return the sum of two numbers."""
-    result = a + b
-    if DEBUG:
-        print(f"DEBUG: {a} + {b} = {result}")
-    return result
+def test_add():
+    """Test addition function."""
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0
+    assert add(0, 0) == 0
 
-def subtract(a, b):
-    """Return the difference of two numbers."""
-    result = a - b
-    if DEBUG:
-        print(f"DEBUG: {a} - {b} = {result}")
-    return result
+def test_subtract():
+    """Test subtraction function."""
+    assert subtract(5, 3) == 2
+    assert subtract(0, 5) == -5
+    assert subtract(-3, -2) == -1
 
-def multiply(a, b):
-    """Return the product of two numbers."""
-    result = a * b
-    if DEBUG:
-        print(f"DEBUG: {a} × {b} = {result}")
-    return result
+def test_multiply():
+    """Test multiplication function."""
+    assert multiply(3, 4) == 12
+    assert multiply(-2, 3) == -6
+    assert multiply(0, 5) == 0
 
-def divide(a, b):
-    """Return the quotient of two numbers."""
-    if b == 0:
-        raise ValueError("Cannot divide by zero")
-    result = a / b
-    if DEBUG:
-        print(f"DEBUG: {a} ÷ {b} = {result}")
-    return result
+def test_divide():
+    """Test division function."""
+    assert divide(8, 2) == 4
+    assert divide(9, 3) == 3
+    assert divide(-10, 2) == -5
 
-def power(a, b):
-    """Return a raised to the power of b."""
-    result = a ** b
-    if DEBUG:
-        print(f"DEBUG: {a} ^ {b} = {result}")
-    return result
+def test_divide_by_zero():
+    """Test that dividing by zero raises an error."""
+    with pytest.raises(ValueError):
+        divide(10, 0)
+
+def test_power():
+    """Test power function."""
+    from calculator import power
+    assert power(2, 3) == 8
+    assert power(5, 0) == 1
+    assert power(3, 2) == 9
