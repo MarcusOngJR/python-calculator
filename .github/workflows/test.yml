@@ -48,6 +48,14 @@ jobs:
       - name: Run pytest
         run: pytest -v
 
+      - name: Debug information
+        if: runner.debug == '1'
+        run: |
+          pytest -vv -s  # Very verbose with print output
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Python version: ${{ matrix.python-version }}"
+          env
+
       - name: Run tests with coverage
         run: pytest -v --cov=calculator --cov-report=term-missing
 
@@ -90,12 +98,3 @@ jobs:
           echo "Deploying to production..."
           echo "Environment: Production"
           echo "Version: ${{ github.sha }}"
-
-  debug: 
-    name: Debug information
-    if: runner.debug == '1'
-    run: |
-      pytest -vv -s  # Very verbose with print output
-      echo "Runner OS: ${{ runner.os }}"
-      echo "Python version: ${{ matrix.python-version }}"
-      env
